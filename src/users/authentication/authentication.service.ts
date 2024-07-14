@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthUser } from './types/auth-user.type';
 import { PayloadJwt } from './types/payload-jwt.type';
 import { RequestAuthUserDto } from './dto/request-auth-user.dto';
+import { isMatch, getHash } from './utils/crypt.util';
 
 @Injectable()
 export class AuthenticationService {
@@ -11,7 +12,8 @@ export class AuthenticationService {
 
   async validateUser({ username, pass }: RequestAuthUserDto) {
     const user = await this.usersService.findByUsername(username);
-    if(!user || pass !== user.password) {
+    const matchPassword = await isMatch(pass, user.password);
+    if(!user || !matchPassword) {
       throw new UnauthorizedException();
     }
     return user;
