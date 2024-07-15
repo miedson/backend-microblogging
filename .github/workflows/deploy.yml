@@ -17,14 +17,14 @@ jobs:
             username: ${{ secrets.SERVER_USER }}
             password: ${{ secrets.SERVER_PASSWORD }}
             envs: ENV_PRD
-            script: 
+            script: |
                 cd /home/ubuntu/projetos
                 if [! -d backend-microblogging ]; then
-                    sudo git clone https://github.com/miedson/backend-microblogging
+                  sudo git clone https://github.com/miedson/backend-microblogging
                 fi
                 cd backend-microblogging
                 if [ ! -f .env ]; then
-                    echo "${{ env.ENV_PRD }}" > .env
+                  echo "${{ env.ENV_PRD }}" > .env
                 fi
                 sudo git pull origin main
                 sudo docker-compose down
