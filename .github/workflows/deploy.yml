@@ -30,13 +30,6 @@ jobs:
               echo "Contents of .env:"
               cat .env
               export $(grep -v '^#' .env | xargs)
-              # Remove non-numeric characters from APP_PORT
-              APP_PORT=$(echo $APP_PORT | tr -d -c 0-9)
-              echo "APP_PORT is set to: $APP_PORT"
-              if [[ ! $APP_PORT =~ ^[0-9]+$ ]]; then
-                echo "Invalid port number in .env file: $APP_PORT"
-                exit 1
-              fi
               git pull origin main
               sudo docker-compose down
               sudo docker-compose build
