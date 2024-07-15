@@ -23,12 +23,13 @@ jobs:
                 echo "Directory exists. Skipping clone."
               fi
               cd "backend-microblogging"
+              git config --global --add safe.directory /home/ubuntu/projetos/backend-microblogging
               if [ ! -f .env ]; then
                 echo "${{ secrets.ENV_PRD }}" | sudo tee .env > /dev/null
               fi
-              source .env
-              if [[ ! $APP_PORT =~ ^[0-9]+$ ]]; then
-                echo "Invalid port number in .env file: $APP_PORT"
+              export $(grep -v '^#' .env | xargs)
+              if [[ ! $PORT =~ ^[0-9]+$ ]]; then
+                echo "Invalid port number in .env file: $PORT"
                 exit 1
               fi
               git pull origin main
