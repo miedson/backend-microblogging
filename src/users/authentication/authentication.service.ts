@@ -12,8 +12,8 @@ export class AuthenticationService {
 
   async validateUser({ username, pass }: RequestAuthUserDto) {
     const user = await this.usersService.findByUsername(username);
-    const matchPassword = await isMatch(pass, user.password);
-    if(!user || !matchPassword) {
+    const matchPass = await isMatch(pass, user.password);
+    if(!user || !matchPass) {
       throw new UnauthorizedException();
     }
     return user;
