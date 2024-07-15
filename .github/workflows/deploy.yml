@@ -15,15 +15,23 @@ jobs:
             username: ${{ secrets.SERVER_USER }}
             password: ${{ secrets.SERVER_PASSWORD }}
             script: |
-                cd /home/ubuntu/projetos/
-                if [ ! -d "backend-microblogging" ]; then
-                  sudo git clone https://github.com/miedson/backend-microblogging
-                fi
-                cd "backend-microblogging"
-                if [ ! -f .env ]; then
-                  echo "${{ secrets.ENV_PRD }}" | sudo tee .env > /dev/null
-                fi
-                sudo git pull origin main
-                sudo docker-compose down
-                sudo docker-compose build
-                sudo docker-compose up -d
+              cd /home/ubuntu/projetos/
+              if [ ! -d "backend-microblogging" ]; then
+                echo "Directory does not exist. Cloning repository..."
+                git clone https://github.com/miedson/backend-microblogging
+              else
+                echo "Directory exists. Skipping clone."
+              fi
+              cd "backend-microblogging"
+              if [ ! -f .env ]; then
+                echo "${{ secrets.ENV_PRD }}" | sudo tee .env > /dev/null
+              fi
+              source .env
+              if [[ ! $APP_PORT =~ ^[0-9]+$ ]]; then
+                echo "Invalid port number in .env file: $APP_PORT"
+                exit 1
+              fi
+              git pull origin main
+              sudo docker-compose down
+              sudo docker-compose build
+              sudo docker-compose up -d
