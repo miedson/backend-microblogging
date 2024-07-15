@@ -28,8 +28,8 @@ jobs:
                 echo "${{ secrets.ENV_PRD }}" | sudo tee .env > /dev/null
               fi
               export $(grep -v '^#' .env | xargs)
-              if [[ ! $PORT =~ ^[0-9]+$ ]]; then
-                echo "Invalid port number in .env file: $PORT"
+              if [[ ! $APP_PORT =~ ^[0-9]+$ ]]; then
+                echo "Invalid port number in .env file: $APP_PORT"
                 exit 1
               fi
               git pull origin main
