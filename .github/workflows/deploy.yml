@@ -19,7 +19,7 @@ jobs:
             envs: ENV_PRD
             script: |
                 cd /home/ubuntu/projetos/
-                if [! -d "backend-microblogging" ]; then
+                if [ ! -d "backend-microblogging" ]; then
                   sudo git clone https://github.com/miedson/backend-microblogging
                 fi
                 cd "backend-microblogging"
