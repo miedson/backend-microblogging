@@ -23,12 +23,9 @@ jobs:
                 echo "Directory exists. Skipping clone."
               fi
               cd "backend-microblogging"
-              git config --global --add safe.directory /home/ubuntu/projetos/backend-microblogging
               if [ ! -f .env ]; then
                 echo "${{ secrets.ENV_PRD }}" | sudo tee .env > /dev/null
               fi
-              echo "Contents of .env:"
-              cat .env
               export $(grep -v '^#' .env | xargs)
               sudo git pull origin main
               sudo docker-compose down
