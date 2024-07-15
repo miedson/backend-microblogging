@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthUser } from './types/auth-user.type';
 import { PayloadJwt } from './types/payload-jwt.type';
 import { RequestAuthUserDto } from './dto/request-auth-user.dto';
-import { isMatch, getHash } from './utils/crypt.util';
+import { isMatch } from './utils/crypt.util';
 
 @Injectable()
 export class AuthenticationService {
