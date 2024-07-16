@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto, createUserSchema } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { isPublic } from './authentication/decorators/is-public.decorator';
-import { ZodValidationPipe } from './authentication/pipes/zod-validation.pipe';
+import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
 
 @Controller('users')
 export class UsersController {
