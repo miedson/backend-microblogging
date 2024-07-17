@@ -10,10 +10,9 @@ import { isMatch } from './utils/crypt.util';
 export class AuthenticationService {
   constructor(private readonly usersService: UsersService, private readonly jwtService: JwtService) {}
 
-  async validateUser({ username, pass }: RequestAuthUserDto) {
+  async validateUser({ username, password }: RequestAuthUserDto) {
     const user = await this.usersService.findByUsername(username);
-    const matchPass = await isMatch(pass, user.password);
-    if(!user || !matchPass) {
+    if(!user || !await isMatch(password, user.password)) {
       throw new UnauthorizedException();
     }
     return user;
