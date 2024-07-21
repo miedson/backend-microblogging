@@ -4,18 +4,20 @@ import { CreateUserDto, createUserSchema } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { isPublic } from './authentication/decorators/is-public.decorator';
 import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
+import { NotificationGateway } from 'src/gateways/notification/notification.gateway';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService, private readonly notificationGateway: NotificationGateway) {}
 
   @isPublic()
   @Post()
   @UsePipes(new ZodValidationPipe(createUserSchema))
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    this.usersService.create(createUserDto);
   }
 
+  @isPublic()
   @Get()
   findAll() {
     return this.usersService.findAll();
