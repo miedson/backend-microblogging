@@ -1,4 +1,5 @@
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Followers } from "../followers/entity/followers.entity";
 
 @Entity()
 export class User {
@@ -15,7 +16,7 @@ export class User {
     @Column()
     last_name: string;
 
-    @Column()
+    @Column({ unique: true })
     username: string
 
     @Column()
