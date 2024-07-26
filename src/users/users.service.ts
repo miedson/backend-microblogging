@@ -22,6 +22,12 @@ export class UsersService {
     return await this.usersRepository.find();
   }
 
+  async findByUuid(uuid: string): Promise<User> {
+    return await this.usersRepository.findOne({
+      where: { uuid }
+    });
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }

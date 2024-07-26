@@ -4,13 +4,14 @@ import { UsersController } from './users.controller';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { NotificationModule } from 'src/gateways/notification/notification.module';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { NotificationGateway } from 'src/gateways/notification/notification.gateway';
+import { FollowersModule } from './followers/followers.module';
+import { Followers } from './followers/entity/followers.entity';
 
 @Module({
-  imports: [AuthenticationModule, TypeOrmModule.forFeature([User]), NotificationModule],
+  imports: [AuthenticationModule, TypeOrmModule.forFeature([User, Followers]), FollowersModule],
   controllers: [UsersController],
   providers: [UsersService, NotificationGateway, ConfigService, JwtService],
   exports: [UsersService],
